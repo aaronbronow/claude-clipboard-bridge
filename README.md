@@ -14,20 +14,6 @@ Long links can't be clicked or easily copied out of CLI.
 
 Anything that can be written to the terminal can be sent to the clipboard.
 
-<img width="1242" height="672" alt="image" src="https://github.com/user-attachments/assets/b5bd7709-61b5-4ad5-9409-0f53bba1bdc9" />
-
-Long content can be sent directly to the clipboard.
-
-<img width="1242" height="672" alt="image" src="https://github.com/user-attachments/assets/52068268-89ed-421a-948b-f7a00453a678" />
-
-Works in Powershell
-
-<img width="1229" height="262" alt="image" src="https://github.com/user-attachments/assets/96a6c3ce-28e1-42e7-87ca-eda553614fbd" />
-
-Works in Claude Code & Antigravity on Windows
-
-<img width="759" height="293" alt="image" src="https://github.com/user-attachments/assets/1a7c8655-5725-4e61-9751-0dc097ae4b57" />
-
 ---
 
 ## Usage
