@@ -99,6 +99,15 @@ For local development, testing, or session-only runs, you can launch Claude Code
   claude --plugin-url https://github.com/aaronbronow/claude-clipboard-bridge/archive/refs/tags/v1.0.4.zip
   ```
 
+### Isolated Sandbox & Docker Setup
+If you run Claude Code inside a highly restricted container or isolated Docker sandbox where native host tools and direct TTY writes are completely disabled, the plugin automatically falls back to writing the copy sequence inside `.clipboard_bypass` in your workspace directory.
+
+To bridge this file back to your host machine's physical clipboard, simply open a separate terminal on your host (outside the container) and run:
+```bash
+tail -F .clipboard_bypass > $(tty)
+```
+*Note: This command continuously tails the local bypass file and pipes the safe write-only OSC 52 sequence directly to your host terminal, maintaining seamless clipboard synchronization transparently.*
+
 ---
 
 ## How It Works
