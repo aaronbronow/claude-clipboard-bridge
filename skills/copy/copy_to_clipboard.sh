@@ -1,5 +1,7 @@
 #!/bin/bash
 # Claude Clipboard Bridge - cross-environment copy utility script
+# Version: 1.0.0
+VERSION="1.0.0"
 #
 # Enables seamless copy syncing from local shells, WSL, macOS, Linux, SSH sessions,
 # and containerized Docker sandboxes back to the user's host clipboard.
