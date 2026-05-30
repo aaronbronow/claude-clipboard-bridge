@@ -1,0 +1,20 @@
+# Debug artifacts
+clipboard_debug.log
+.clipboard_debug
+
+# Bypass channel files
+.clipboard_bypass
+.clipboard_bypass.tmp
+.clipboard_pipe
+
+# Makefile release temp
+.release-notes.tmp
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Editor backup files
+*~
+*.swp
+
