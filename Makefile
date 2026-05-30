@@ -24,7 +24,7 @@ release:
 	@sed -i 's/"version": "[^"]*"/"version": "$(VERSION)"/' .claude-plugin/plugin.json
 	@echo "Committing version bump..."
 	@git add .claude-plugin/plugin.json
-	@git commit -m "bump: version $(VERSION)"
+	@git diff-index --quiet HEAD .claude-plugin/plugin.json || git commit -m "bump: version $(VERSION)"
 	@echo "Pushing changes to remote..."
 	@git push origin main
 	@echo "Tagging release v$(VERSION)..."
