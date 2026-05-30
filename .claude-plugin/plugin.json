@@ -1,6 +1,6 @@
 {
   "name": "claude-clipboard-bridge",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Copy any text to the clipboard over SSH, Tmux, WSL, Powershell",
   "author": {
     "name": "Aaron Bronow",
