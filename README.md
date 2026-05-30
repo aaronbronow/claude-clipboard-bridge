@@ -72,12 +72,14 @@ Once the plugin is published or added to your marketplace registry:
 
 1. **Add the Marketplace Source** (if using custom repositories):
    ```bash
-   /plugin marketplace add aaronbronow/claude-clipboard-bridge
+   /plugin marketplace add aaronbronow/agent-clipboard-marketplace
    ```
 
 2. **Install the Plugin**:
    ```bash
    /plugin install claude-clipboard-bridge
+   # Or explicitly target the marketplace:
+   /plugin install claude-clipboard-bridge@agent-clipboard-marketplace
    ```
 
 3. **Reload Plugins**:
@@ -112,10 +114,15 @@ This plugin operates as a background **Claude Skill**. You do not need to memori
 
 ## Security & Sandboxing
 
-On Windows hosts running standard PowerShell shells, Claude Code executes commands in a containerized sandbox. 
+By default, Claude Code runs terminal operations inside a containerized sandbox.
 
-> [!IMPORTANT]
-> To allow copy commands to escape the container and propagate to your host's native Windows clipboard, Claude will prompt for **unsandboxed execution** (`BypassSandbox` or host permission). Denying this permission will cause the copy to succeed silently inside the container without updating your physical clipboard.
+### 🛡️ Sandbox-Safe Transport (OSC 52)
+Because this plugin relies primarily on **OSC 52 terminal escape sequences** written directly to `stdout` or `/dev/tty`, it operates **fully within sandboxed and containerized environments**. The escape sequences are securely processed by your physical host's terminal emulator (e.g., Windows Terminal, iTerm2, Alacritty, or VS Code Terminal), which runs natively outside the sandbox. Therefore, **no special host permissions or unsandboxed shell privileges are required** for copy operations to succeed via OSC 52.
+
+### 🔌 Host-Utility Fallbacks
+If the terminal emulator does not support OSC 52, or if you run under a restricted TTY, the plugin will attempt to fall back to platform-native tools (such as `clip.exe` / PowerShell under WSL, or `pbcopy` on macOS).
+- Calling host utilities directly from within an isolated sandboxed container may fail or trigger shell sandbox alerts.
+- To prevent this, the bridge automatically utilizes **Sandbox Bypass Channels** by writing the copy stream to a local workspace file (`.clipboard_bypass`). Since writing within the workspace is a standard sandboxed operation, a simple host-side background listener (such as `tail -F .clipboard_bypass > $(tty)`) bridges the copy stream to the host clipboard securely and transparently, **with zero sandbox bypass prompts or privilege escalation required**.
 
 ---
 
