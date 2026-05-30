@@ -87,12 +87,17 @@ Once the plugin is published or added to your marketplace registry:
    /reload-plugins
    ```
 
-### Local Development / Manual Installation
-To load the plugin directly from a local folder:
-```bash
-/plugin install /path/to/claude-clipboard-bridge
-/reload-plugins
-```
+### Local Development & Ad-hoc Loading
+For local development, testing, or session-only runs, you can launch Claude Code with the plugin loaded temporarily:
+
+* **Load from a local directory**:
+  ```bash
+  claude --plugin-dir /path/to/claude-clipboard-bridge
+  ```
+* **Load from a remote ZIP archive**:
+  ```bash
+  claude --plugin-url https://github.com/aaronbronow/claude-clipboard-bridge/archive/refs/tags/v1.0.4.zip
+  ```
 
 ---
 
