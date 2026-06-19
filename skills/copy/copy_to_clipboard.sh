@@ -3,7 +3,7 @@
 # Enable debug mode by creating a file named '.clipboard_debug' in the agent working directory
 # or by setting ABC_DEBUG=1 in the environment.
 DEBUG=false
-if [ -f ".clipboard_debug" ] || [ "$ABC_DEBUG" = "1" ]; then
+if [ -f ".clipboard_debug" ] || [ "$ABC_DEBUG" = "1" ] || [ "$CLAUDE_CLIPBOARD_DEBUG" = "1" ] || [ "$GEMINI_CLIPBOARD_DEBUG" = "1" ] || [ "$CODEX_CLIPBOARD_DEBUG" = "1" ] || [ "$ANTIGRAVITY_CLIPBOARD_DEBUG" = "1" ]; then
     DEBUG=true
     DEBUG_LOG="clipboard_debug.log"
     echo "--- $(date) ---" >> "$DEBUG_LOG"
@@ -164,6 +164,11 @@ if [ -p ".clipboard_pipe" ]; then
             BYPASS_SUCCESS=true
         fi
     fi
+fi
+
+# If bypass succeeded, exit immediately to avoid falling through and polluting stdout/TTY
+if [ "$BYPASS_SUCCESS" = true ]; then
+    exit 0
 fi
 
 # 4. Direct TTY write (Secondary fallback)
