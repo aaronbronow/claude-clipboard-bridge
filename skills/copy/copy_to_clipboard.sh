@@ -180,9 +180,13 @@ if [ -w "/dev/tty" ]; then
     fi
 fi
 
-# 5. Last Resort: Stdout
-log_debug "Writing OSC 52 to stdout"
-printf "%s" "$osc52_sequence"
-if [ "$IS_SANDBOX" = false ] && [ "$BYPASS_SUCCESS" = false ]; then
-    echo "Copied via stdout (OSC 52)" >&2
+# 5. Last Resort: Stdout (Only if stdout is a TTY, to prevent polluting captured command outputs)
+if [ -t 1 ]; then
+    log_debug "Writing OSC 52 to stdout"
+    printf "%s" "$osc52_sequence"
+    if [ "$IS_SANDBOX" = false ] && [ "$BYPASS_SUCCESS" = false ]; then
+        echo "Copied via stdout (OSC 52)" >&2
+    fi
+else
+    log_debug "Stdout is not a TTY, skipping stdout OSC 52 write to avoid output pollution"
 fi
