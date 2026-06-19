@@ -1,4 +1,25 @@
-.PHONY: test release clean
+UPSTREAM_DIR ?= ../agent-bridge-clipboard
+
+.PHONY: import-upstream test release clean
+
+import-upstream:
+	# Assume upstream has run 'make build'
+	@if [ ! -d "$(UPSTREAM_DIR)/dist/claude-clipboard-bridge" ]; then \
+		echo "Error: $(UPSTREAM_DIR)/dist/claude-clipboard-bridge not found."; \
+		echo "Please run 'make build' in the upstream directory first."; \
+		exit 1; \
+	fi
+	
+	# Clear existing skills directory to ensure a clean state
+	rm -rf skills
+	mkdir -p skills/copy
+	
+	# Copy the skill markdown instructions
+	cp -v $(UPSTREAM_DIR)/dist/claude-clipboard-bridge/SKILL.md skills/copy/
+	
+	# Copy the copy script utility
+	cp -v $(UPSTREAM_DIR)/dist/claude-clipboard-bridge/scripts/copy.sh skills/copy/copy_to_clipboard.sh
+	chmod +x skills/copy/copy_to_clipboard.sh
 
 test:
 	@if [ -f "./tests/test_clipboard.sh" ]; then \
